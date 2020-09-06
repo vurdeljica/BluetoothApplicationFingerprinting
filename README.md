@@ -9,6 +9,9 @@ Adb can be obtained from: [SDK Platform Tools](https://developer.android.com/stu
 After download, add path to adb in Environment Variable Path.
 
 Used modules in this project:  
-\- btsnoop
-
-Remarks: btsnoop.py has a bug in it. Add `import pckgutil` at the beginning of file.
+\- pyshark  
+\- argparse  
+\- numpy  
+\- pandas  
+\- seaborn  
+\- matplotlib  

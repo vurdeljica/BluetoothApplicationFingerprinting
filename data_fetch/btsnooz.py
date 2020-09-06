@@ -54,13 +54,13 @@ def type_to_hci(type):
   Returns the HCI type of a packet given its btsnooz type.
   """
     if type == TYPE_OUT_CMD:
-        return '\x01'
+        return b'\x01'
     if type == TYPE_IN_ACL or type == TYPE_OUT_ACL:
-        return '\x02'
+        return b'\x02'
     if type == TYPE_IN_SCO or type == TYPE_OUT_SCO:
-        return '\x03'
+        return b'\x03'
     if type == TYPE_IN_EVT:
-        return '\x04'
+        return b'\x04'
 
 
 def decode_snooz(snooz, decoded_file_path):
@@ -77,7 +77,7 @@ def decode_snooz(snooz, decoded_file_path):
     # Oddly, the file header (9 bytes) is not compressed, but the rest is.
     decompressed = zlib.decompress(snooz[9:])
 
-    decoded_file.write('btsnoop\x00\x00\x00\x00\x01\x00\x00\x03\xea')
+    decoded_file.write(b'btsnoop\x00\x00\x00\x00\x01\x00\x00\x03\xea')
 
     if version == 1:
         decode_snooz_v1(decompressed, last_timestamp_ms)
@@ -143,10 +143,6 @@ def decode_snooz_v2(decompressed, last_timestamp_ms, decoded_file):
 
 
 def parse_log(log_file, dst_file_path):
-    if len(sys.argv) > 2:
-        sys.stderr.write('Usage: %s [bugreport]\n' % sys.argv[0])
-        exit(1)
-
     iterator = open(log_file)
     found = False
     base64_string = ""
