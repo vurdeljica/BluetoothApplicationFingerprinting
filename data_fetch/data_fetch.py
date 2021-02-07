@@ -1,25 +1,23 @@
 import os
 import time
+import fs_util
+import paths
 from btsnooz import parse_log
 
 
 class DataFetch:
-    RESULT_DIR = dir_path = os.path.abspath(os.path.dirname(__file__)) + r"\..\result"
-    BLUETOOTH_MANAGER_LOG = RESULT_DIR + r"\bluetooth_manager.log"
-    BTSNOOP_LOG = RESULT_DIR + r"\btsnoop.log"
-
     def __init__(self, timeout_s = 30):
         self.__timeout_s = timeout_s
-        self.__destination = DataFetch.BTSNOOP_LOG
-        if not os.path.exists(DataFetch.RESULT_DIR):
-            os.makedirs(DataFetch.RESULT_DIR)
+        self.__destination = paths.BTSNOOP_LOG
+        if not os.path.exists(paths.RESULT_DIR):
+            os.makedirs(paths.RESULT_DIR)
 
     @staticmethod
     def __fetch_bluetooth_manager_logs():
-        os.system('adb shell dumpsys bluetooth_manager > ' + DataFetch.BLUETOOTH_MANAGER_LOG)
+        os.system('adb shell dumpsys bluetooth_manager > ' + paths.BLUETOOTH_MANAGER_LOG)
 
     def __extract_btsnoop_log(self):
-        parse_log(DataFetch.BLUETOOTH_MANAGER_LOG, self.__destination)
+        parse_log(paths.BLUETOOTH_MANAGER_LOG, self.__destination)
 
     @staticmethod
     def __clear_bluetooth_data():
@@ -37,7 +35,7 @@ class DataFetch:
 
     @staticmethod
     def __start_application(application_name):
-        os.system('adb shell "monkey -p ' + DataFetch.get_application_full_package_name(application_name) +
+        os.system('adb shell "monkey -p ' + DataFetch.__get_application_full_package_name(application_name) +
                   ' -c android.intent.category.LAUNCHER 1 > /dev/null 2>&1"')
 
     def set_destination(self, destination):

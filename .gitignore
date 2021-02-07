@@ -130,3 +130,6 @@ dmypy.json
 
 .idea/
 result/
+learning_result/
+fetch_result/
+extract_result/

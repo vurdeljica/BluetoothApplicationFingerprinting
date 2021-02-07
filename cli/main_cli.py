@@ -2,6 +2,7 @@ import argparse
 import fix_imports
 from data_extract_cli import DataExtractCli
 from data_fetch_cli import DataFetchCli
+from learning_cli import LearningCli
 
 
 def main(command_line=None):
@@ -10,6 +11,7 @@ def main(command_line=None):
 
     DataExtractCli(subparsers)
     DataFetchCli(subparsers)
+    LearningCli(subparsers)
 
     args = parser.parse_args(command_line)
     if args.command is None:
